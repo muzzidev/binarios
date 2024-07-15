@@ -1,0 +1,264 @@
+SPI FlashROM Programmer 2.23 by RayeR
+*************************************
+
+SPIPGM	     - binary for Linux x86-32
+SPIPGM64     - binary for Linux x86-64
+SPIPGM.EXE   - binary for DOS/Win9x x86-32
+SPIPGMW.EXE  - binary for Win9x/NT/2k/XP/Vista/7/8 x86-32
+IOPERM.DLL   - low-level HW access library for Win9x/NT/2k/XP/Vista/7/8(NoUAC)
+
+Version 1.7  + improved LPT port handling resulting in 1,6x faster reading
+
+Version 2.0  + extended FlashROM identification (some old non-JEDEC ID chips)
+	     + support for AAI Byte/Word programming modes (some SST FlashROMs)
+	     + verify command (compare FlashROM content against file)
+	     + block erase command (some ST FlashROMs)
+	     + allow images smaller than FlashROM size (displays warning)
+	     + read speed up +25%
+	     + write speed up +41%
+
+Version 2.15 + write status register command
+
+Version 2.18 + support for extended status register (some Atmel, ESMT,
+               GigaDevice, SST and Winbond chips)
+             + improved short delay function for more accurate timing in
+               Win32 version (when using /d= option)
+             + added /o= option to set LPT initial data lines output value
+             + compiled Linux 64-bit binary
+
+Version 2.19 + support for reading 64b unique serial number from Winbond
+               FlashROMs (displayed by identify command)
+
+Version 2.21 + experimental support for FlashROMs greater than 16MB
+               (use enter 32-bit address mode command)
+               WARNING: this version contains serious bug in program command!
+
+Version 2.22 + bugfix of malfunction program command (messed up in ver. 2.21)
+
+Version 2.23 + bugfix of invalid unlocking of status register on SST25VFxxx
+
+SPI FlashROMs supported (new are marked with *)
+***********************************************
+
+AMIC:
+A25L05PU/PT (64kB)
+A25L10PU/PT (128kB)
+A25L20PU/PT (256kB)
+A25L40PU/PT (512kB)
+A25L80PU/PT (1MB)
+A25L16PU/PT (2MB)
+A25L32PU/PT (4MB)
+A25L64PU/PT (8MB)
+A25L512 (64kB)
+A25L010 (128kB)
+A25L020 (256kB)
+A25L040 (512kB)
+A25L080 (1MB) - tested OK
+
+Atmel:
+AT25F512B (64kB)
+AT25F1024A (128kB) - this chip may be supported but a tester is needed
+AT25DF021 (256kB)
+AT26DF041 (512kB)
+AT25DF041A (512kB)
+AT26F004 (512kB) - tested OK
+AT26DF081 (1MB)
+AT25/26DF081A (1MB)
+AT25DF081 (1MB)
+AT26DF161 (1MB)
+AT26DF161A (2MB)
+AT25DF161 (2MB)
+AT25DQ161 (2MB)
+AT25/26DF321 (4MB)
+AT25DF321A (4MB)
+AT25DQ321A (4MB)
+AT25DF641(A) (8MB)
+
+EON:
+EN25B10 (128kB)
+EN25B20 (256kB)
+EN25B40(T) (512kB)
+EN25B80 (1MB)
+EN25B16 (2MB)
+EN25P32 (4MB)
+EN25P64 (8MB)
+EN25P128 (16MB)
+EN25Q40 (512kB)
+EN25Q80 (1MB)
+EN25Q16 (2MB)
+EN25Q32 (4MB)
+EN25Q64 (8MB)
+EN25Q128 (16MB)
+EN25F10 (128kB)
+EN25F20 (256kB)
+EN25F40 (512kB)
+EN25F80 (1MB) - tested OK
+EN25F16 (2MB)
+EN25F32 (4MB)
+EN25F64 (8MB)
+EN25F128 (16MB)
+EN25T10 (128kB)
+EN25T20 (256kB)
+EN25T40 (512kB)
+EN25T80 (1MB)
+EN25T16 (2MB)
+EN25T32 (4MB)
+EN25T64 (8MB)
+EN25QH16 (2MB)
+EN25QH32 (4MB) - tested OK
+EN25QH64 (8MB)
+EN25QH128 (16MB)
+EN25QH256 (32MB)
+
+ESMT:
+F25L004A (512kB) - tested OK
+F25L008A/08PA (1MB)
+F25L016A/16PA (2MB)
+F25L32PA (4MB)
+F25L64PA (8MB)
+F25S04PA (512kB)
+F25L08PA (1MB)
+F25L16QA (2MB)
+F25L32QA (4MB)
+F25L64QA (8MB)
+
+GigaDevice:
+GD25Q512 (64kB)
+GD25Q10 (128kB)
+GD25Q20 (256kB)
+GD25Q40 (512kB)
+GD25Q80 (1MB)
+GD25Q16 (2MB) - tested OK
+GD25Q32 (4MB) - tested OK
+GD25Q64 (8MB)
+
+Intel:
+QB25F016S33B8 (2MB)
+QB25F032S33B8 (4MB)
+QB25F064S33B8 (8MB)
+
+Macronix:
+MX25L512E/25V512 (64kB)
+MX25L5121E (64kB)
+MX25U5121E (64kB)
+MX25L1005/1006/1025/1026E/25V1006E (128kB) - tested OK
+MX25L1021E (128kB)
+MX25U1001E (128kB)
+MX25L2005/2006/2025/2026E/25V2006 (256kB)
+MX25U2033E (256kB)
+MX25L4005/4006/4025/4026/25V4005/4006E (512kB)
+MX25U4033/4035/25V4033/4035 (512kB)
+MX25L8005/8006/8008/8035/8036/8073/8075E (1MB) - tested OK
+MX25U8033/8035E (1MB)
+MX25V8035 (1MB)
+MX25L1605/1606/1608E (2MB) - tested OK
+MX25L1633/1635/1636/1673/1675E (2MB)
+MX25L1635/1636E (2MB)
+MX25U1635 (2MB)
+MX25L3205/3206/3208/3233/3235/3273/3275E (4MB)
+MX25U3235/25L3239E (4MB)
+MX25L3225/3236/3237D (4MB)
+MX25L6405/6406/6408/6435/6436/6445/6465/6473/6475E (8MB) - tested OK
+MX25U6435/25L6439E (8MB) - tested OK
+MX25L12835/12836/12839/12845/12865/12873/12875F (16MB) - tested OK
+MX25U12835F (16MB)
+MX25L25635/25639/25735/25835E (32MB)
+MX25U25635F (32MB)
+MX66L51235F/51245G (64MB)
+MX66U51235F (64MB)
+MX66L1G45G (128MB)
+
+PMC:
+Pm25LD512 (64kB) - tested OK
+Pm25LD010 (128kB) - tested OK
+Pm25LD020 (256kB)
+Pm25LV512(A) (64kB) - tested OK
+Pm25LV010(AB) (128kB) - tested OK
+Pm25LV020 (256kB)
+Pm25LV040 (512kB) - tested OK
+Pm25LV080B (1MB)
+Pm25LV016B (2MB)
+Pm25LV032B (4MB)
+Pm25LV064B (8MB)
+*Pm25LQ032C (4MB)
+
+Spansion:
+S25FL001A (128kB)
+S25FL002A (256kB)
+S25FL004A (512kB)
+S25FL008A (1MB)
+S25FL016A (2MB)
+S25FL032A/P (4MB) - tested OK
+S25FL064A/P (8MB)
+S25FL128P/S/129P/S (16MB) - tested OK
+S25FL256S (32MB)
+S25FL512S (64MB)
+S25FL01GS (128MB)
+
+ST Microelectronic/Numonyx:
+M25P05 (64kB)
+M25P10 (128kB)
+M25P10AV (128kB) - tested OK
+M25P20 (256kB)
+M25P40 (512kB)
+M25P80 (1MB)
+M25P16 (2MB)
+M25P32 (4MB) - tested OK
+M25P64 (8MB)
+M25P128 (16MB)
+M45PE10 (128kB)
+M45PE20 (256kB)
+M45PE40 (512kB)
+M45PE80 (1MB)
+M45PE16 (2MB)
+M25PX80 (1MB)
+M25PX16 (2MB)
+M25PX32 (4MB)
+M25PX64 (8MB)
+N25Q032A13E (4MB)
+N25Q032A11E (4MB)
+N25Q064A13E (8MB)
+N25Q064A11E (8MB)
+N25Q128A13E (16MB)
+N25Q128A11E (16MB)
+N25Q256A13E (32MB)
+N25Q256A11E (32MB)
+N25Q512A13G (64MB)
+N25Q512A11G (64MB)
+N25Q00AA13GB (128MB)
+
+SST:
+SST25VF512(B) (64kB) - tested OK
+SST25VF010(B) (128kB) - tested OK
+SST25VF020(B) (256kB)
+SST25VF040(B) (512kB)
+SST25VF080(B) (1MB) - tested OK
+SST25VF016(B) (2MB) - tested OK
+SST25VF032(B) (4MB)
+SST25VF064C (8MB)
+SST25VF128(B) (16MB)
+SST26VF016 (2MB)
+SST26VF032 (4MB)
+SST26VF064 (8MB)
+
+Winbond:
+W25Q10B (128kB)
+W25Q20BV (256kB)
+W25Q40BV (512kB)
+W25Q80BV (1MB) - tested OK
+W25Q16BV (2MB) - tested OK
+W25Q32BV (4MB) - tested OK
+W25Q64BV/FV (8MB) - tested OK
+W25Q128BV/FV (16MB)
+W25Q256FV (32MB)
+W25Q16FW 1,8V (2MB)
+W25Q32FW 1,8V (4MB)
+W25Q64FW 1,8V (8MB)
+W25Q128FW 1,8V (16MB)
+W25X10 (128kB)
+W25X20 (256kB)
+W25X40 (512kB)
+W25X80 (1MB) - tested OK
+W25X16 (2MB)
+W25X32 (4MB) - tested OK
+W25X64 (8MB)
